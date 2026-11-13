@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Twenty-six geometric letterforms, one continuous transformation."><title>Recognition — A–Z</title>
+<style>
+:root{color-scheme:light;background:#f9f9f7;color:#191919}*{box-sizing:border-box}body{margin:0}main{min-height:100svh;display:flex;flex-direction:column;justify-content:center;padding:clamp(24px,5vw,80px);gap:clamp(30px,7vh,80px)}.letters{width:100%;max-width:1600px;margin:auto;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:clamp(4px,1vw,20px)}svg{display:block;width:100%;overflow:visible}input{display:block;appearance:none;-webkit-appearance:none;width:min(580px,80%);height:44px;background:transparent;margin:0 auto;cursor:ew-resize;flex-shrink:0}input::-webkit-slider-runnable-track{height:3px;background:#191919}input::-moz-range-track{height:3px;background:#191919}input::-webkit-slider-thumb{appearance:none;-webkit-appearance:none;width:24px;height:24px;border-radius:50%;background:#da382a;border:0;margin-top:-10.5px}input::-moz-range-thumb{width:24px;height:24px;border-radius:50%;background:#da382a;border:0}input:focus-visible{outline:2px solid #1c4ea1;outline-offset:6px}@media(max-width:700px){.letters{grid-template-columns:repeat(3,minmax(0,1fr));row-gap:28px}main{padding:24px;gap:30px}.letters{margin:0}input{width:85%}}
+.letters{display:block;width:min(560px,100%);margin:0 auto}.letters svg[hidden]{display:none}nav{display:flex;justify-content:center;gap:clamp(8px,2vw,24px)}button{font:500 16px Arial,sans-serif;color:#191919;border:0;background:transparent;width:44px;height:44px;cursor:pointer;border-radius:50%}button[aria-pressed="true"]{background:#191919;color:#f2ecdf}button:focus-visible{outline:2px solid #1c4ea1;outline-offset:4px}main{align-items:center;gap:clamp(16px,3vh,36px)}@media(min-height:650px){.letters{width:min(560px,65vh,100%)}}@media(max-width:700px){.letters{margin:0 auto}}
+.letters{width:min(480px,52svh,100%)}
+nav{flex-wrap:wrap;max-width:940px;gap:4px 8px}button{flex:0 0 44px}main{padding:clamp(18px,4vw,60px)}@media(max-width:600px){nav{max-width:360px;gap:2px}button{width:36px;height:40px;flex-basis:36px}.letters{width:min(380px,44svh,100%)}}
+</style></head><body><main><nav aria-label="Choose a letter"></nav><div class="letters" aria-label="Current transforming letter"></div><input type="range" min="0" max="100" step="0.1" value="0" aria-label="Transform the selected letter"></main>
+<script>
+const alphabet=[
+ [
+  "M-75 105L0 -105",
+  "M0 -105L75 105",
+  "M-49 35H49"
+ ],
+ [
+  "M-65 -105V105",
+  "M-65 -105H0A52.5 52.5 0 0 1 0 0H-65",
+  "M-65 0H5A52.5 52.5 0 0 1 5 105H-65"
+ ],
+ [
+  "M52.5 -105A105 105 0 0 0 -52.5 0",
+  "M-52.5 0A105 105 0 0 0 52.5 105"
+ ],
+ [
+  "M-65 -105V105",
+  "M-65 -105H-15A100 105 0 0 1 85 0",
+  "M85 0A100 105 0 0 1 -15 105H-65"
+ ],
+ [
+  "M-60 -105V105",
+  "M-60 -105H70",
+  "M-60 0H48",
+  "M-60 105H70"
+ ],
+ [
+  "M-60 -105V105",
+  "M-60 -105H70",
+  "M-60 0H48"
+ ],
+ [
+  "M0 -100A100 100 0 0 0 -100 0",
+  "M-100 0A100 100 0 0 0 0 100",
+  "M0 0H70.710678V70.710678"
+ ],
+ [
+  "M-65 -105V105",
+  "M65 -105V105",
+  "M-65 0H65"
+ ],
+ [
+  "M-65 -105H65",
+  "M0 -105V105",
+  "M-65 105H65"
+ ],
+ [
+  "M-30 -105H65",
+  "M40 -105V45",
+  "M40 45A60 60 0 0 1 -80 45"
+ ],
+ [
+  "M-65 -105V105",
+  "M70 -105L-65 15",
+  "M-12 -32L75 105"
+ ],
+ [
+  "M-60 -105V105",
+  "M-60 105H75"
+ ],
+ [
+  "M-90 105V-105",
+  "M-90 -105L0 30",
+  "M0 30L90 -105",
+  "M90 -105V105"
+ ],
+ [
+  "M-70 105V-105",
+  "M-70 -105L70 105",
+  "M70 105V-105"
+ ],
+ [
+  "M0 -105A85 105 0 0 0 0 105",
+  "M0 105A85 105 0 0 0 0 -105"
+ ],
+ [
+  "M-65 -105V105",
+  "M-65 -105H0A55 55 0 0 1 0 5H-65"
+ ],
+ [
+  "M0 -105A85 105 0 0 0 0 105",
+  "M0 105A85 105 0 0 0 0 -105",
+  "M20 45L100 125"
+ ],
+ [
+  "M-65 -105V105",
+  "M-65 -105H0A52.5 52.5 0 0 1 0 0H-65",
+  "M-15 0L75 105"
+ ],
+ [
+  "M65 -80C30 -130 -75 -115 -75 -55C-75 -15 -25 0 0 0",
+  "M0 0C40 0 75 20 75 55C75 115 -30 130 -70 80"
+ ],
+ [
+  "M-85 -105H85",
+  "M0 -105V105"
+ ],
+ [
+  "M-70 -105V35",
+  "M-70 35A70 70 0 0 0 70 35",
+  "M70 35V-105"
+ ],
+ [
+  "M-80 -105L0 105",
+  "M0 105L80 -105"
+ ],
+ [
+  "M-105 -105L-55 105",
+  "M-55 105L0 -35",
+  "M0 -35L55 105",
+  "M55 105L105 -105"
+ ],
+ [
+  "M-75 -105L75 105",
+  "M75 -105L-75 105"
+ ],
+ [
+  "M-80 -105L0 5",
+  "M80 -105L0 5",
+  "M0 5V105"
+ ],
+ [
+  "M-75 -105H75",
+  "M75 -105L-75 105",
+  "M-75 105H75"
+ ]
+];
+const ns='http://www.w3.org/2000/svg',colors=['#da382a','#1c4ea1','#e9b72c'],parts=[];
+alphabet.forEach((segments,index)=>{const svg=document.createElementNS(ns,'svg');svg.setAttribute('viewBox','-230 -225 460 450');svg.setAttribute('role','img');svg.setAttribute('aria-label',String.fromCharCode(65+index));segments.forEach((d,i)=>{const path=document.createElementNS(ns,'path');path.setAttribute('d',d);path.setAttribute('fill','none');path.setAttribute('stroke',colors[i%3]);path.setAttribute('stroke-width','26');path.setAttribute('stroke-linecap','butt');path.setAttribute('stroke-linejoin','miter');svg.append(path);parts.push({path,letter:index,part:i,x:0,y:0,angle:0});});document.querySelector('.letters').append(svg);});
+// Start as a baseline-aligned inventory of the original strokes.
+function startAngle(d){
+ if(/[ACQSZ]/i.test(d))return 0;
+ const tokens=d.match(/[MLHV]|-?\d*\.?\d+/g);let i=0,x=0,y=0,first=null,lines=0;
+ while(i<tokens.length){const command=tokens[i++];if(command==='M'||command==='L'){x=Number(tokens[i++]);y=Number(tokens[i++]);if(command==='M')first={x,y};else lines++;}else if(command==='H'){x=Number(tokens[i++]);lines++;}else if(command==='V'){y=Number(tokens[i++]);lines++;}else return 0;}
+ return lines===1?Math.atan2(x-first.x,y-first.y)*180/Math.PI:0;
+}
+const startAngles=alphabet.map((parts,index)=>parts.map(d=>(index===2||index===6)?0:startAngle(d)));
+
+alphabet.forEach((_,index)=>{
+ const row=parts.filter(part=>part.letter===index);
+ row.forEach(part=>{
+  part.angle=startAngles[index][part.part];
+  const radians=part.angle*Math.PI/180,c=Math.cos(radians),s=Math.sin(radians),length=part.path.getTotalLength();
+  const points=Array.from({length:161},(_,i)=>{const p=part.path.getPointAtLength(length*i/160);return{x:p.x*c-p.y*s,y:p.x*s+p.y*c};});
+  part.bounds={left:Math.min(...points.map(p=>p.x)),right:Math.max(...points.map(p=>p.x)),bottom:Math.max(...points.map(p=>p.y))};
+ });
+ const gap=48,total=row.reduce((sum,p)=>sum+p.bounds.right-p.bounds.left,0)+gap*(row.length-1);
+ let cursor=-total/2;
+ row.forEach(part=>{part.x=cursor-part.bounds.left;const curved=part.path.getAttribute("d").match(/[ACQ]/);part.y=105-part.bounds.bottom-(curved?13:0);if(index===6&&part.part===0)part.y+=13;cursor+=part.bounds.right-part.bounds.left+gap;});
+});
+const navigation=document.querySelector('nav'),glyphs=Array.from(document.querySelector('.letters').children);let active=0;const buttons=[];
+function select(index){if(index!==active){slider.value=0;draw();}active=index;glyphs.forEach((svg,i)=>{svg.hidden=i!==active;svg.style.display=i===active?'block':'none';svg.setAttribute('aria-hidden',i===active?'false':'true');});buttons.forEach((button,i)=>button.setAttribute('aria-pressed',String(i===active)));}
+alphabet.forEach((_,index)=>{const button=document.createElement('button');button.type='button';button.textContent=String.fromCharCode(65+index);button.setAttribute('aria-label','Show letter '+button.textContent);button.addEventListener('click',()=>select(index));navigation.append(button);buttons.push(button);});
+const slider=document.querySelector('input');function draw(){const progress=Number(slider.value)/100,t=1-progress;
+const gParts=parts.filter(part=>part.letter===6),angle=(-90+45*progress)*Math.PI/180,lower=(90-45*progress)*Math.PI/180;
+gParts[0].path.setAttribute('d',`M${100*Math.cos(angle)} ${100*Math.sin(angle)}A100 100 0 0 0 -100 0`);
+gParts[1].path.setAttribute('d',`M-100 0A100 100 0 0 0 ${100*Math.cos(lower)} ${100*Math.sin(lower)}`);
+parts.forEach(({path,x,y,angle})=>path.setAttribute('transform',`translate(${x*t} ${y*t}) rotate(${angle*t})`));}slider.addEventListener('input',draw);draw();select(0);
+</script></body></html>
